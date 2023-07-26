@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Archivist.AI.Console", "Archivist.AI.Console\Archivist.AI.Console.csproj", "{86970160-2D8C-4E77-926C-5E68FE0075D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Archivist.AI.Core", "Archivist.AI.Core\Archivist.AI.Core.csproj", "{C22F54EB-B39C-4AB6-8560-7CA2598C752E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86970160-2D8C-4E77-926C-5E68FE0075D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86970160-2D8C-4E77-926C-5E68FE0075D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86970160-2D8C-4E77-926C-5E68FE0075D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86970160-2D8C-4E77-926C-5E68FE0075D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C22F54EB-B39C-4AB6-8560-7CA2598C752E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C22F54EB-B39C-4AB6-8560-7CA2598C752E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C22F54EB-B39C-4AB6-8560-7CA2598C752E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C22F54EB-B39C-4AB6-8560-7CA2598C752E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1AA1865D-7B8A-4275-B615-290458EC7975}
+	EndGlobalSection
+EndGlobal
