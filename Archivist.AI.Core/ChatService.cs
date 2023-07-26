@@ -28,7 +28,6 @@ public class ChatService : IChatService
             .Append(ChatMessage.FromUser(usersQuestion))
             .ToList();
 
-        var questionTokens = usersQuestion.Length / 4;
         var response = await _openAIService.ChatCompletion.CreateCompletion(
             new ChatCompletionCreateRequest
             {

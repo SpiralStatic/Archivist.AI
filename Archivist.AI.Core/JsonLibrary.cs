@@ -1,20 +1,23 @@
-﻿using System.Text.Json;
+﻿using System.IO;
+using System.Text.Json;
 
 namespace Archivist.AI.Core;
 
 public class JsonLibrary : ILibrary
 {
-    private readonly FileStream _fileStream;
+    private string _jsonFilePath;
 
     public JsonLibrary(string jsonFilePath)
     {
-        _fileStream = File.Open(jsonFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
+        _jsonFilePath = jsonFilePath;
     }
 
     public async Task<List<Embedding>> ReadLibrary()
     {
+        var fileStream = File.Open(_jsonFilePath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.None);
         var embeddings = new List<Embedding>();
-        using StreamReader reader = new(_fileStream);
+
+        using StreamReader reader = new(fileStream);
         while (!reader.EndOfStream)
         {
             var line = await reader.ReadLineAsync();
@@ -40,7 +43,8 @@ public class JsonLibrary : ILibrary
 
     public async Task UpdateLibrary(List<Embedding> embeddings)
     {
-        using StreamWriter writer = new(_fileStream);
+        var fileStream = File.Open(_jsonFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
+        using StreamWriter writer = new(fileStream);
 
         foreach (var embedding in embeddings)
         {
