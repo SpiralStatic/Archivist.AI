@@ -1,6 +1,5 @@
 ﻿using Archivist.AI.Core;
 using Microsoft.Extensions.Hosting;
-using OpenAI.ObjectModels.RequestModels;
 
 namespace Archivist.AI.Console;
 
@@ -24,6 +23,11 @@ public class ArchivistHostedService : IHostedService
         while (!cancellationToken.IsCancellationRequested)
         {
             var usersQuestion = System.Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(usersQuestion))
+            {
+                continue;
+            }
 
             var response = await _chatService.GetChatResponse(usersQuestion);
 

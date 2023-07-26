@@ -8,7 +8,7 @@ public class ChatService : IChatService
     private readonly IEmbeddingsService _embeddingsService;
     private readonly IOpenAIService _openAIService;
 
-    private readonly List<ChatMessage> _chatHistory = new List<ChatMessage>();
+    private readonly List<ChatMessage> _chatHistory = new();
 
     public ChatService(IEmbeddingsService embeddingsService, IOpenAIService openAIService)
     {
@@ -20,18 +20,21 @@ public class ChatService : IChatService
     {
         var relatedEmbeddings = await _embeddingsService.GetRelatedEmbeddings(usersQuestion);
 
-        var predefinedInfo = relatedEmbeddings.Select(x => ChatMessage.FromSystem(x.Text));
+        var predefinedInfo = relatedEmbeddings.Select(x => ChatMessage.FromSystem($"\"\"\"{x.Text}\"\"\""));
 
         var messages = predefinedInfo
-            .Prepend(ChatMessage.FromSystem("You are a storyteller"))
+            .Prepend(ChatMessage.FromSystem("Use the provided sentences delimited by triple quotes to help answer questions. You are a storyteller, but don't make things up"))
             .Concat(_chatHistory)
             .Append(ChatMessage.FromUser(usersQuestion))
             .ToList();
 
+        var questionTokens = usersQuestion.Length / 4;
         var response = await _openAIService.ChatCompletion.CreateCompletion(
             new ChatCompletionCreateRequest
             {
                 Model = Models.CompletionModel,
+                Temperature = 0.3f,
+                PresencePenalty = 0.8f,
                 Messages = messages
             }
         );

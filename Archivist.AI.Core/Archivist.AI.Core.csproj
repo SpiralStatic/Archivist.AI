@@ -7,13 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Betalgo.OpenAI" Version="7.0.0" />
+    <None Remove="library.jsonl" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="library.jsonl">
+    <Content Include="library.jsonl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Betalgo.OpenAI" Version="7.0.0" />
   </ItemGroup>
 
 </Project>

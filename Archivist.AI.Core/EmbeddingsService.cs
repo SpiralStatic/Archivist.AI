@@ -60,7 +60,7 @@ public class EmbeddingsService : IEmbeddingsService
         var similarities = _embeddingsLibrary
             .Select(emb => (emb, DotProduct(emb.EmbeddingValue.Embedding.ToArray(), e)))
             .OrderByDescending(x => x.Item2)
-            .Take(5)
+            .Take(10)
             .Select(x => x.emb)
             .ToList();
 
