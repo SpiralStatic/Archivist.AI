@@ -1,7 +1,9 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
 
+export const addKnowledge = 'addKnowledge';
+
 const data = new SlashCommandBuilder()
-  .setName('addKnowledge')
+  .setName(addKnowledge)
   .setDescription('Add to knowledge to the library')
   .addStringOption(option =>
     option.setName('input')
