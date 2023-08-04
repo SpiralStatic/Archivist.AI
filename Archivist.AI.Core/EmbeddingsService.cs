@@ -16,17 +16,19 @@ public class EmbeddingsService : IEmbeddingsService
         _library = library;
     }
 
-    public async Task UpdateEmbeddings()
+    public async Task UpdateEmbeddings(string text)
     {
         // todo: token limit of 8191
         List<string> test = new()
         {
-                "Hagar of clan Blackrook is a human barbarian who comes from clan Blackrook in the northern wastes of Gol-dressia",
-                "Hagar wields a large lightning axe that was taken from the fae realm",
-                "The young sleeping red dragon was charged by Hagar, forcing the team in to action",
-                "The adventurer's party of Nememia and Hagar were joined by the elves Thea and Marni",
-                "Thea is an elf that has trained in the arts of bladesinging, a fusion of blades and magic"
-            };
+            "Hagar of clan Blackrook is a human barbarian who comes from clan Blackrook in the northern wastes of Gol-dressia",
+            "Hagar wields a large lightning axe that was taken from the fae realm",
+            "The young sleeping red dragon was charged by Hagar, forcing the team in to action",
+            "The adventurer's party of Nememia and Hagar were joined by the elves Thea and Marni",
+            "Thea is an elf that has trained in the arts of bladesinging, a fusion of blades and magic"
+        };
+
+        var requestInput = text.Trim() == "default" ? test : new List<string> { text };
 
         var embeddingResponse = await _openAIService.Embeddings.CreateEmbedding(new EmbeddingCreateRequest
         {

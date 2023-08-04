@@ -2,7 +2,7 @@
 
 public interface IEmbeddingsService
 {
-    Task UpdateEmbeddings();
+    Task UpdateEmbeddings(string text);
 
     Task<List<Embedding>> GetRelatedEmbeddings(string text);
 }

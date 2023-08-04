@@ -2,6 +2,7 @@ using Archivist.AI.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Archivist.AI.API.Controllers;
+
 [ApiController]
 [Route("[controller]")]
 public class ChatController : ControllerBase

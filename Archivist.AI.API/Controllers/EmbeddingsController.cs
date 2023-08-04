@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace Archivist.AI.API.Controllers;
+
 [Route("api/[controller]")]
 [ApiController]
 public class EmbeddingsController : ControllerBase
@@ -16,6 +17,6 @@ public class EmbeddingsController : ControllerBase
     [HttpPost(Name = "PostEmbedding")]
     public async Task Post(string message)
     {
-        await _embeddingService.UpdateEmbeddings();
+        await _embeddingService.UpdateEmbeddings(message);
     }
 }
