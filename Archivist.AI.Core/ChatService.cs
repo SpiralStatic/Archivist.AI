@@ -5,6 +5,8 @@ namespace Archivist.AI.Core;
 
 public class ChatService : IChatService
 {
+    private const string ChatRole = "Use the provided sentences delimited by triple quotes to help answer questions. You are a storyteller, but don't make things up";
+    
     private readonly IEmbeddingsService _embeddingsService;
     private readonly IOpenAIService _openAIService;
 
@@ -23,7 +25,7 @@ public class ChatService : IChatService
         var predefinedInfo = relatedEmbeddings.Select(x => ChatMessage.FromSystem($"\"\"\"{x.Text}\"\"\""));
 
         var messages = predefinedInfo
-            .Prepend(ChatMessage.FromSystem("Use the provided sentences delimited by triple quotes to help answer questions. You are a storyteller, but don't make things up"))
+            .Prepend(ChatMessage.FromSystem(ChatRole))
             .Concat(_chatHistory)
             .Append(ChatMessage.FromUser(usersQuestion))
             .ToList();
