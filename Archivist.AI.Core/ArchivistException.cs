@@ -3,6 +3,7 @@
 public class ArchivistException : Exception
 {
     public const string EmbeddingMaxTokensLimit = "Given embedding string is above the allowed max token limit";
+    public const string EmbeddingBadResponse = "Embedding request gave non-successful response";
     public const string ChatBadResponse = "Chat completion request gave non-successful response";
     public const string JsonLibraryFailedDeserialization = "Failed to deserialize the given json string";
 

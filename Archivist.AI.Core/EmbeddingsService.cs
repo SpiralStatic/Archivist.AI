@@ -48,6 +48,8 @@ public class EmbeddingsService : IEmbeddingsService
             var embeddings = testEmbeddings.Zip(embeddingResponse.Data).Select(x => new Embedding(x.First, x.Second)).ToList();
             await _library.UpdateLibrary(embeddings);
         }
+
+        throw new ArchivistException(ArchivistException.EmbeddingBadResponse);
     }
 
     public async Task<List<Embedding>> GetRelatedEmbeddings(string text)
