@@ -16,5 +16,6 @@
   * User vs admin
 
 ## Out there
+* Profanity feature
 * AI Image creation
 * Image Attachment feature

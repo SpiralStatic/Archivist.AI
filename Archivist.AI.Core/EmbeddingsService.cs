@@ -43,13 +43,18 @@ public class EmbeddingsService : IEmbeddingsService
             InputAsList = requestInput
         });
 
-        if (embeddingResponse.Successful)
+        if (embeddingResponse.Successful && embeddingResponse?.Data != null)
         {
-            var embeddings = testEmbeddings.Zip(embeddingResponse.Data).Select(x => new Embedding(x.First, x.Second)).ToList();
+            var embeddings = requestInput.Zip(embeddingResponse.Data)
+                .Select(x => new Embedding(x.First, x.Second))
+                .ToList();
+
             await _library.UpdateLibrary(embeddings);
         }
-
-        throw new ArchivistException(ArchivistException.EmbeddingBadResponse);
+        else
+        {
+            throw new ArchivistException(ArchivistException.EmbeddingBadResponse);
+        }
     }
 
     public async Task<List<Embedding>> GetRelatedEmbeddings(string text)
@@ -59,6 +64,11 @@ public class EmbeddingsService : IEmbeddingsService
             Model = Models.EmbeddingModel.Model,
             Input = text,
         });
+
+        if (!embeddingResponse.Successful || embeddingResponse?.Data == null)
+        {
+            throw new ArchivistException(ArchivistException.EmbeddingBadResponse);
+        }
 
         var e = embeddingResponse.Data.SelectMany(x => x.Embedding).ToArray();
 
