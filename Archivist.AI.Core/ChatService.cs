@@ -47,6 +47,6 @@ public class ChatService : IChatService
             return message.Content;
         }
 
-        throw new Exception();
+        throw new ArchivistException(ArchivistException.ChatBadResponse);
     }
 }

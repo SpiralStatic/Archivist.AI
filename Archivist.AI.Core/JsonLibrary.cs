@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace Archivist.AI.Core;
 
@@ -33,7 +32,7 @@ public class JsonLibrary : ILibrary
                 }
                 catch (JsonException ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    throw new ArchivistException(ArchivistException.JsonLibraryFailedDeserialization, ex);
                 }
             }
         }

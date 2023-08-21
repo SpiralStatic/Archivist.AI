@@ -1,5 +1,6 @@
 ﻿using OpenAI.Interfaces;
 using OpenAI.ObjectModels.RequestModels;
+using OpenAI.Tokenizer.GPT3;
 
 namespace Archivist.AI.Core;
 
@@ -18,8 +19,14 @@ public class EmbeddingsService : IEmbeddingsService
 
     public async Task UpdateEmbeddings(string text)
     {
-        // todo: token limit of 8191
-        List<string> test = new()
+        var estimatedTokenCount = TokenizerGpt3.TokenCount(text);
+
+        if (estimatedTokenCount > Models.EmbeddingModel.MaxTokens)
+        {
+            throw new ArchivistException(ArchivistException.EmbeddingMaxTokensLimit);
+        }
+
+        List<string> testEmbeddings = new()
         {
             "Hagar of clan Blackrook is a human barbarian who comes from clan Blackrook in the northern wastes of Gol-dressia",
             "Hagar wields a large lightning axe that was taken from the fae realm",
@@ -28,17 +35,17 @@ public class EmbeddingsService : IEmbeddingsService
             "Thea is an elf that has trained in the arts of bladesinging, a fusion of blades and magic"
         };
 
-        var requestInput = text.Trim() == "default" ? test : new List<string> { text };
+        var requestInput = text.Trim() == "default" ? testEmbeddings : new List<string> { text };
 
         var embeddingResponse = await _openAIService.Embeddings.CreateEmbedding(new EmbeddingCreateRequest
         {
-            Model = Models.EmbeddingModel,
-            InputAsList = test
+            Model = Models.EmbeddingModel.Model,
+            InputAsList = requestInput
         });
 
         if (embeddingResponse.Successful)
         {
-            var embeddings = test.Zip(embeddingResponse.Data).Select(x => new Embedding(x.First, x.Second)).ToList();
+            var embeddings = testEmbeddings.Zip(embeddingResponse.Data).Select(x => new Embedding(x.First, x.Second)).ToList();
             await _library.UpdateLibrary(embeddings);
         }
     }
@@ -47,7 +54,7 @@ public class EmbeddingsService : IEmbeddingsService
     {
         var embeddingResponse = await _openAIService.Embeddings.CreateEmbedding(new EmbeddingCreateRequest
         {
-            Model = Models.EmbeddingModel,
+            Model = Models.EmbeddingModel.Model,
             Input = text,
         });
 

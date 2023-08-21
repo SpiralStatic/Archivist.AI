@@ -1,8 +1,8 @@
 ﻿namespace Archivist.AI.Core;
 
-public class Models
+public static class Models
 {
-    public const string EmbeddingModel = "text-embedding-ada-002";
+    public static readonly (string Model, int MaxTokens) EmbeddingModel = ("text-embedding-ada-002", 8191);
 
     public const string CompletionModel = "gpt-3.5-turbo";
 }
