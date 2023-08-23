@@ -9,9 +9,8 @@ public class ChatController : ControllerBase
 {
     private readonly IChatService _chatService;
 
-    public ChatController(ILogger<ChatController> logger, IChatService chatService)
+    public ChatController(IChatService chatService)
     {
-        _logger = logger;
         _chatService = chatService;
     }
 
