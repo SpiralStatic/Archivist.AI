@@ -1,7 +1,8 @@
-import { token, apiEndpoint } from './config.json';
 import { addKnowledge } from './commands/addKnowledge';
-import { request } from 'undici';
+import { askQuestion } from './commands/askQuestion';
 import { ChatInputCommandInteraction, Client, Events, GatewayIntentBits } from 'discord.js';
+import { request } from 'undici';
+import { token, apiEndpoint } from './config.json';
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -18,6 +19,14 @@ client.on('interactionCreate', async interaction => {
     const text = command.options.getString('input');
     await interaction.deferReply();
     await request(apiEndpoint + '/api/embeddings', { method: 'POST', body: text });
+  }
+  else if (command.commandName === askQuestion) {
+    const text = command.options.getString('input');
+    await interaction.deferReply();
+    await request(apiEndpoint + '/api/chat', { method: 'POST', body: text });
+  }
+  else {
+    await interaction.reply('Command not recognised');
   }
 });
 

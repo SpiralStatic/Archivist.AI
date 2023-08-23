@@ -7,7 +7,6 @@ namespace Archivist.AI.API.Controllers;
 [Route("[controller]")]
 public class ChatController : ControllerBase
 {
-    private readonly ILogger<ChatController> _logger;
     private readonly IChatService _chatService;
 
     public ChatController(ILogger<ChatController> logger, IChatService chatService)
