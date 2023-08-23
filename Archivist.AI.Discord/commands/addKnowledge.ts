@@ -4,7 +4,7 @@ export const addKnowledge = 'addKnowledge';
 
 const data = new SlashCommandBuilder()
   .setName(addKnowledge)
-  .setDescription('Add to knowledge to the library')
+  .setDescription('Add knowledge to the archive')
   .addStringOption(option =>
     option.setName('input')
       .setDescription('The story to be shared')
@@ -14,6 +14,6 @@ const data = new SlashCommandBuilder()
 module.exports = {
 	data,
 	async execute(interaction: ChatInputCommandInteraction) {
-		await interaction.reply('Pong!');
+		await interaction.reply({ content: 'Adding to the archive', ephemeral: true });
 	},
 };
