@@ -1,5 +1,6 @@
 ﻿using Archivist.AI.Core;
 using Microsoft.Extensions.Hosting;
+using OpenAI.ObjectModels.RequestModels;
 
 namespace Archivist.AI.Console;
 
@@ -29,7 +30,7 @@ public class ArchivistHostedService : IHostedService
                 continue;
             }
 
-            var response = await _chatService.GetChatResponse(usersQuestion);
+            var response = await _chatService.GetChatResponse(usersQuestion, Enumerable.Empty<ChatMessage>());
 
             System.Console.WriteLine(response);
         }

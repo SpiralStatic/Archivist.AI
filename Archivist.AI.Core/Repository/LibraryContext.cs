@@ -60,7 +60,7 @@ public record Record : DbModel
     public Guid ArchiveId { get; set; }
     public required string Text { get; set; }
     public required DateTime WorldDate { get; set; }
-    public required List<double> EmbeddingValue { get; set; }
+    public required ICollection<double> EmbeddingValue { get; set; }
 };
 
 public class DictionaryConverter<TValue> : ValueConverter<Dictionary<string,TValue>, string>

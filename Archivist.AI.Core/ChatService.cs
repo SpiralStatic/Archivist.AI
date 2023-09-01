@@ -10,15 +10,13 @@ public class ChatService : IChatService
     private readonly IEmbeddingsService _embeddingsService;
     private readonly IOpenAIService _openAIService;
 
-    private readonly List<ChatMessage> _chatHistory = new();
-
     public ChatService(IEmbeddingsService embeddingsService, IOpenAIService openAIService)
     {
         _embeddingsService = embeddingsService;
         _openAIService = openAIService;
     }
 
-    public async Task<string> GetChatResponse(string usersQuestion)
+    public async Task<ChatMessage> GetChatResponse(string usersQuestion, IEnumerable<ChatMessage>? chatHistory)
     {
         var relatedEmbeddings = await _embeddingsService.GetRelatedEmbeddings(usersQuestion);
 
@@ -26,7 +24,7 @@ public class ChatService : IChatService
 
         var messages = predefinedInfo
             .Prepend(ChatMessage.FromSystem(ChatRole))
-            .Concat(_chatHistory)
+            .Concat(chatHistory ?? Enumerable.Empty<ChatMessage>())
             .Append(ChatMessage.FromUser(usersQuestion))
             .ToList();
 
@@ -42,9 +40,7 @@ public class ChatService : IChatService
 
         if (response.Successful)
         {
-            var message = response.Choices.First().Message;
-            _chatHistory.Add(message);
-            return message.Content;
+            return response.Choices.First().Message;
         }
 
         throw new ArchivistException(ArchivistException.ChatBadResponse);

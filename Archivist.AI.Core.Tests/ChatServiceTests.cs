@@ -32,7 +32,7 @@ public class ChatServiceTests
 
         const string text = "test";
 
-        await _sut.GetChatResponse(text).ShouldThrowAsync<ArchivistException>();
+        await _sut.GetChatResponse(text, Enumerable.Empty<ChatMessage>()).ShouldThrowAsync<ArchivistException>();
     }
 
     [Test]
@@ -52,8 +52,8 @@ public class ChatServiceTests
 
         const string text = "test";
 
-        var result = await _sut.GetChatResponse(text);
-        result.ShouldBe("hello there");
+        var result = await _sut.GetChatResponse(text, Enumerable.Empty<ChatMessage>());
+        result.Content.ShouldBe("hello there");
     }
     #endregion
 }

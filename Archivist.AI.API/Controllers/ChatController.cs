@@ -1,5 +1,6 @@
 using Archivist.AI.Core;
 using Microsoft.AspNetCore.Mvc;
+using OpenAI.ObjectModels.RequestModels;
 
 namespace Archivist.AI.API.Controllers;
 
@@ -17,6 +18,8 @@ public class ChatController : ControllerBase
     [HttpPost(Name = "PostMessage")]
     public async Task<string> Post(string message)
     {
-        return await _chatService.GetChatResponse(message);
+        var chatMessageResponse = await _chatService.GetChatResponse(message, Enumerable.Empty<ChatMessage>());
+
+        return chatMessageResponse.Content;
     }
 }

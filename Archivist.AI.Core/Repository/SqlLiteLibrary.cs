@@ -28,7 +28,7 @@ public class SqlLiteLibrary : ILibrary
             {
                 ArchiveId = archiveId,
                 Text = x.Text,
-                EmbeddingValue = x.EmbeddingValue,
+                EmbeddingValue = x.EmbeddingValue.ToList(),
                 WorldDate = DateTime.UtcNow
             };
         });
