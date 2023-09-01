@@ -1,5 +1,5 @@
 using Archivist.AI.Core;
-using Archivist.AI.Core.Repository;
+using Archivist.AI.Core.Repository.Library;
 using Microsoft.EntityFrameworkCore;
 using OpenAI.Extensions;
 using System.Reflection;
@@ -18,6 +18,8 @@ var currentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Loc
 
 builder.Services.AddDbContext<LibraryContext>(options => options.UseSqlite($"Data Source={currentDirectory}/Repository/Library.db", b => b.MigrationsAssembly("Archivist.AI.API")));
 builder.Services.AddScoped<ILibrary, SqlLiteLibrary>();
+
+builder.Services.AddMemoryCache();
 
 builder.Services.AddControllers();
 

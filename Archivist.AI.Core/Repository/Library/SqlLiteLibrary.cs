@@ -1,4 +1,4 @@
-﻿namespace Archivist.AI.Core.Repository;
+﻿namespace Archivist.AI.Core.Repository.Library;
 
 public class SqlLiteLibrary : ILibrary
 {

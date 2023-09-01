@@ -4,7 +4,7 @@ using OpenAI.ObjectModels.ResponseModels;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json;
 
-namespace Archivist.AI.Core.Repository;
+namespace Archivist.AI.Core.Repository.Library;
 
 public class LibraryContext : DbContext
 {
@@ -63,7 +63,7 @@ public record Record : DbModel
     public required ICollection<double> EmbeddingValue { get; set; }
 };
 
-public class DictionaryConverter<TValue> : ValueConverter<Dictionary<string,TValue>, string>
+public class DictionaryConverter<TValue> : ValueConverter<Dictionary<string, TValue>, string>
 {
     public DictionaryConverter() : base
         (
