@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace Archivist.AI.Core;
+namespace Archivist.AI.Core.Repository;
 
 public class JsonLibrary : ILibrary
 {

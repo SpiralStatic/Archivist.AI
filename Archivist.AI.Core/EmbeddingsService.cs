@@ -1,4 +1,5 @@
-﻿using OpenAI.Interfaces;
+﻿using Archivist.AI.Core.Repository;
+using OpenAI.Interfaces;
 using OpenAI.ObjectModels.RequestModels;
 using OpenAI.Tokenizer.GPT3;
 

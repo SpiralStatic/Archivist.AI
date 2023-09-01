@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Archivist.AI.Core", "Archiv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Archivist.AI.API", "Archivist.AI.API\Archivist.AI.API.csproj", "{C4DDABBF-ABD0-4F21-BC7A-60E6046318F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Archivist.AI.Core.Tests", "Archivist.AI.Core.Tests\Archivist.AI.Core.Tests.csproj", "{82344B5E-FD00-4A74-B898-60F00D357AD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Archivist.AI.Core.Tests", "Archivist.AI.Core.Tests\Archivist.AI.Core.Tests.csproj", "{82344B5E-FD00-4A74-B898-60F00D357AD8}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "Archivist.AI.Discord", "Archivist.AI.Discord\Archivist.AI.Discord.esproj", "{1F2BBD5D-2C63-4516-9823-AD75661DFF42}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,12 @@ Global
 		{82344B5E-FD00-4A74-B898-60F00D357AD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82344B5E-FD00-4A74-B898-60F00D357AD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82344B5E-FD00-4A74-B898-60F00D357AD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F2BBD5D-2C63-4516-9823-AD75661DFF42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F2BBD5D-2C63-4516-9823-AD75661DFF42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F2BBD5D-2C63-4516-9823-AD75661DFF42}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{1F2BBD5D-2C63-4516-9823-AD75661DFF42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F2BBD5D-2C63-4516-9823-AD75661DFF42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F2BBD5D-2C63-4516-9823-AD75661DFF42}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

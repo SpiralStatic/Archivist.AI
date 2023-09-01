@@ -1,3 +1,4 @@
+using Archivist.AI.Core.Repository;
 using NSubstitute;
 using OpenAI.Interfaces;
 using OpenAI.ObjectModels.ResponseModels;

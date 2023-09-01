@@ -1,5 +1,6 @@
 ﻿using Archivist.AI.Console;
 using Archivist.AI.Core;
+using Archivist.AI.Core.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OpenAI.Extensions;

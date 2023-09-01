@@ -1,6 +1,4 @@
-﻿using OpenAI.ObjectModels.ResponseModels;
-
-namespace Archivist.AI.Core;
+﻿namespace Archivist.AI.Core.Repository;
 
 public interface ILibrary
 {
