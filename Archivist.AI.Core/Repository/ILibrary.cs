@@ -4,5 +4,5 @@ public interface ILibrary
 {
     Task<List<Embedding>> ReadLibrary(Guid ownerId);
 
-    Task UpdateLibrary(List<Embedding> embeddings);
+    Task UpdateLibrary(Guid archiveId, List<Embedding> embeddings);
 }

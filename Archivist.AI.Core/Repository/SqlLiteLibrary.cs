@@ -20,8 +20,19 @@ public class SqlLiteLibrary : ILibrary
         return Task.FromResult(result);
     }
 
-    public Task UpdateLibrary(List<Embedding> embeddings)
+    public async Task UpdateLibrary(Guid archiveId, List<Embedding> embeddings)
     {
-        throw new NotImplementedException();
+        var records = embeddings.Select(x =>
+        {
+            return new Record
+            {
+                ArchiveId = archiveId,
+                Text = x.Text,
+                EmbeddingValue = x.EmbeddingValue,
+                WorldDate = DateTime.UtcNow
+            };
+        });
+
+        await _libraryContext.Records.AddRangeAsync(records);
     }
 }

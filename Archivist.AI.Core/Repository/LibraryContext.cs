@@ -6,7 +6,9 @@ namespace Archivist.AI.Core.Repository;
 
 public class LibraryContext : DbContext
 {
+    public DbSet<Owner> Owners { get; set; }
     public DbSet<Archive> Archives { get; set; }
+    public DbSet<Record> Records { get; set; }
 }
 
 public abstract record DbModel
@@ -38,6 +40,7 @@ public record Archive : DbModel
 public record Record : DbModel
 {
     public Guid Id { get; set; }
+    public Guid ArchiveId { get; set; }
     public required string Text { get; set; }
     public required DateTime WorldDate { get; set; }
     public required EmbeddingResponse EmbeddingValue { get; set; }

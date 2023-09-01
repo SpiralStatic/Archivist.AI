@@ -40,7 +40,7 @@ public class JsonLibrary : ILibrary
         return embeddings;
     }
 
-    public async Task UpdateLibrary(List<Embedding> embeddings)
+    public async Task UpdateLibrary(Guid archiveId, List<Embedding> embeddings)
     {
         var fileStream = File.Open(_jsonFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
         using StreamWriter writer = new(fileStream);

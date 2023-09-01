@@ -50,7 +50,7 @@ public class EmbeddingsService : IEmbeddingsService
                 .Select(x => new Embedding(x.First, x.Second))
                 .ToList();
 
-            await _library.UpdateLibrary(embeddings);
+            await _library.UpdateLibrary(new Guid(), embeddings);
         }
         else
         {
