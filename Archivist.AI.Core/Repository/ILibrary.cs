@@ -2,7 +2,7 @@
 
 public interface ILibrary
 {
-    Task<List<Embedding>> ReadLibrary();
+    Task<List<Embedding>> ReadLibrary(Guid ownerId);
 
     Task UpdateLibrary(List<Embedding> embeddings);
 }

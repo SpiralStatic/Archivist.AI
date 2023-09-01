@@ -1,5 +1,6 @@
 using Archivist.AI.Core;
 using Archivist.AI.Core.Repository;
+using Microsoft.EntityFrameworkCore;
 using OpenAI.Extensions;
 using System.Reflection;
 
@@ -11,8 +12,11 @@ builder.Services.AddSingleton<IChatService, ChatService>();
 builder.Services.AddSingleton<IEmbeddingsService, EmbeddingsService>();
 
 // TODO: Better file access
-var jsonLibraryPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new ArgumentException("Library location not found"), "Repository/library.jsonl");
+var currentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+var jsonLibraryPath = Path.Combine(currentDirectory ?? throw new ArgumentException("Library location not found"), "Repository/library.jsonl");
 builder.Services.AddSingleton<ILibrary, JsonLibrary>((x) => new JsonLibrary(jsonLibraryPath));
+
+builder.Services.AddDbContext<LibraryContext>(options => options.UseSqlite($"Data Source={currentDirectory}/Repository/library.db"));
 
 builder.Services.AddControllers();
 

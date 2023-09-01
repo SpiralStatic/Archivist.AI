@@ -1,8 +1,9 @@
-<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.83-alpha">
+﻿<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.83-alpha">
   <PropertyGroup>
+	<ShouldRunNpmInstall>false</ShouldRunNpmInstall>
     <!-- Command to run on project build -->
-    <BuildCommand>npm run build</BuildCommand>
+    <BuildCommand>pnpm run build</BuildCommand>
     <!-- Command to run on project clean -->
-    <CleanCommand>npm run clean</CleanCommand>
+    <CleanCommand>pnpm run clean</CleanCommand>
   </PropertyGroup>
 </Project>

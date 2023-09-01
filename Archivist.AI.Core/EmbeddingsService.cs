@@ -76,7 +76,7 @@ public class EmbeddingsService : IEmbeddingsService
         if (_embeddingsLibrary.Count == 0)
         {
             // TODO: Better sync
-            _embeddingsLibrary = await _library.ReadLibrary();
+            _embeddingsLibrary = await _library.ReadLibrary(new Guid());
         }
 
         var similarities = _embeddingsLibrary

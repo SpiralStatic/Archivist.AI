@@ -4,14 +4,14 @@ namespace Archivist.AI.Core.Repository;
 
 public class JsonLibrary : ILibrary
 {
-    private string _jsonFilePath;
+    private readonly string _jsonFilePath;
 
     public JsonLibrary(string jsonFilePath)
     {
         _jsonFilePath = jsonFilePath;
     }
 
-    public async Task<List<Embedding>> ReadLibrary()
+    public async Task<List<Embedding>> ReadLibrary(Guid ownerId)
     {
         var fileStream = File.Open(_jsonFilePath, FileMode.OpenOrCreate, FileAccess.Read, FileShare.None);
         var embeddings = new List<Embedding>();

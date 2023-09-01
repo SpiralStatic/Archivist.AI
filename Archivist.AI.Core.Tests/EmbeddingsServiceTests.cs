@@ -85,7 +85,7 @@ public class EmbeddingsServiceTests
         _openAIService.Embeddings.CreateEmbedding(default!)
             .ReturnsForAnyArgs(Task.FromResult(new EmbeddingCreateResponse { Data = new List<EmbeddingResponse> { givenEmbedding } }));
 
-        _library.ReadLibrary()
+        _library.ReadLibrary(default!)
             .Returns(Task.FromResult(new List<Embedding> { new Embedding("test2", existingEmbedding), new Embedding("test3", existingEmbedding2) }));
 
         const string text = "test";
