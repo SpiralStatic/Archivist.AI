@@ -47,7 +47,7 @@ public class EmbeddingsService : IEmbeddingsService
         if (embeddingResponse.Successful && embeddingResponse?.Data != null)
         {
             var embeddings = requestInput.Zip(embeddingResponse.Data)
-                .Select(x => new Embedding(x.First, x.Second))
+                .Select(x => new Embedding(x.First, x.Second.Embedding))
                 .ToList();
 
             await _library.UpdateLibrary(new Guid(), embeddings);
@@ -80,7 +80,7 @@ public class EmbeddingsService : IEmbeddingsService
         }
 
         var similarities = _embeddingsLibrary
-            .Select(emb => (emb, DotProduct(emb.EmbeddingValue.Embedding.ToArray(), e)))
+            .Select(emb => (emb, DotProduct(emb.EmbeddingValue.ToArray(), e)))
             .OrderByDescending(x => x.Item2)
             .Take(10)
             .Select(x => x.emb)

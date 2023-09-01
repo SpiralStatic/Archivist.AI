@@ -2,4 +2,4 @@
 
 namespace Archivist.AI.Core;
 
-public record Embedding(string Text, EmbeddingResponse EmbeddingValue);
+public record Embedding(string Text, List<double> EmbeddingValue);

@@ -8,15 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddOpenAIService();
-builder.Services.AddSingleton<IChatService, ChatService>();
-builder.Services.AddSingleton<IEmbeddingsService, EmbeddingsService>();
+builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddScoped<IEmbeddingsService, EmbeddingsService>();
 
 // TODO: Better file access
 var currentDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-var jsonLibraryPath = Path.Combine(currentDirectory ?? throw new ArgumentException("Library location not found"), "Repository/library.jsonl");
-builder.Services.AddSingleton<ILibrary, JsonLibrary>((x) => new JsonLibrary(jsonLibraryPath));
+//var jsonLibraryPath = Path.Combine(currentDirectory ?? throw new ArgumentException("Library location not found"), "Repository/library.jsonl");
+//builder.Services.AddSingleton<ILibrary, JsonLibrary>((x) => new JsonLibrary(jsonLibraryPath));
 
-builder.Services.AddDbContext<LibraryContext>(options => options.UseSqlite($"Data Source={currentDirectory}/Repository/library.db"));
+builder.Services.AddDbContext<LibraryContext>(options => options.UseSqlite($"Data Source={currentDirectory}/Repository/Library.db", b => b.MigrationsAssembly("Archivist.AI.API")));
+builder.Services.AddScoped<ILibrary, SqlLiteLibrary>();
 
 builder.Services.AddControllers();
 

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OpenAI.ObjectModels.ResponseModels;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json;
 
 namespace Archivist.AI.Core.Repository;
 
@@ -9,6 +11,21 @@ public class LibraryContext : DbContext
     public DbSet<Owner> Owners { get; set; }
     public DbSet<Archive> Archives { get; set; }
     public DbSet<Record> Records { get; set; }
+
+    public LibraryContext(DbContextOptions<LibraryContext> options) : base(options)
+    {
+    }
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder
+            .Properties<Dictionary<string, string>>()
+            .HaveConversion<DictionaryConverter<string>>();
+
+        configurationBuilder
+            .Properties<List<double>>()
+            .HaveConversion<ListConverter<double>>();
+    }
 }
 
 public abstract record DbModel
@@ -24,7 +41,7 @@ public abstract record DbModel
 public record Owner : DbModel
 {
     public Guid Id { get; set; }
-    public IDictionary<string, string>? OwnershipProperties { get; set; }
+    public Dictionary<string, string>? OwnershipProperties { get; set; }
     public ICollection<Archive>? Archives { get; }
 }
 
@@ -43,5 +60,27 @@ public record Record : DbModel
     public Guid ArchiveId { get; set; }
     public required string Text { get; set; }
     public required DateTime WorldDate { get; set; }
-    public required EmbeddingResponse EmbeddingValue { get; set; }
+    public required List<double> EmbeddingValue { get; set; }
 };
+
+public class DictionaryConverter<TValue> : ValueConverter<Dictionary<string,TValue>, string>
+{
+    public DictionaryConverter() : base
+        (
+            x => JsonSerializer.Serialize(x, JsonSerializerOptions.Default),
+            x => JsonSerializer.Deserialize<Dictionary<string, TValue>>(x, JsonSerializerOptions.Default) ?? new Dictionary<string, TValue>()
+        )
+    {
+    }
+}
+
+public class ListConverter<TValue> : ValueConverter<List<TValue>, string>
+{
+    public ListConverter() : base
+        (
+            x => JsonSerializer.Serialize(x, JsonSerializerOptions.Default),
+            x => JsonSerializer.Deserialize<List<TValue>>(x, JsonSerializerOptions.Default) ?? new List<TValue>()
+        )
+    {
+    }
+}
