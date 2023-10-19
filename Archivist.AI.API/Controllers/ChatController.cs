@@ -1,4 +1,5 @@
 using Archivist.AI.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using OpenAI.ObjectModels.RequestModels;
@@ -19,6 +20,7 @@ public class ChatController : ControllerBase
     }
 
     [HttpPost(Name = "PostMessage")]
+    [Authorize(Policy = "ChatPermission")]
     public async Task<IActionResult> Post(string message)
     {
         var ownerId = User.Claims.FirstOrDefault(x => x.Type == "OwnerId")?.Value;

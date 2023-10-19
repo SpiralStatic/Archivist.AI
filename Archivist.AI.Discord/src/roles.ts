@@ -1,14 +1,24 @@
-import { GuildMemberRoleManager, Interaction } from "discord.js";
+import { Guild, GuildMemberRoleManager, Interaction, PermissionsBitField } from "discord.js";
 
-const ManagementPermission = "MANAGEMENT"
-const ChatPermission = "CHAT";
-const ArchivePermission = "ARCHIVE"
+const AdminRole = "Admin";
+const ArchiveRole = "Archivist"
 
-const AdminRole = "ADMIN";
+export const isOwner = (interaction: Interaction) => {
+  return interaction.guild?.ownerId == interaction.member?.user.id;
+}
 
-const isAdmin = (interaction: Interaction) => {
+export const isAdmin = (interaction: Interaction) => {
   const roles = interaction.member?.roles as GuildMemberRoleManager;
 
-  return roles.cache.some(role => role.name === 'Admin'
-    || interaction.guild?.ownerId == interaction.member?.user.id);
+  return roles.cache.some(role => role.name === AdminRole);
+}
+
+export const isArchivist = (interaction: Interaction) => {
+  const roles = interaction.member?.roles as GuildMemberRoleManager;
+
+  return roles.cache.some(role => role.name === ArchiveRole);
+}
+
+const setDefaultPermissions = (guild: Guild) => {
+  guild.roles.everyone.setPermissions([PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel]);
 }

@@ -21,6 +21,12 @@ builder.Services.AddScoped<ILibrary, SqlLiteLibrary>();
 
 builder.Services.AddMemoryCache();
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ChatPermission", policy => policy.RequireClaim("OwnerId"));
+    options.AddPolicy("ManagementPermission", policy => policy.RequireClaim("OwnerId"));
+});
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();

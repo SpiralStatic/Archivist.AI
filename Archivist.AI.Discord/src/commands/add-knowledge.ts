@@ -1,6 +1,7 @@
 import { archivistApiEndpoint } from '../../config.json';
-import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 import { request } from "undici";
+import { isAdmin, isArchivist } from '../roles';
 
 const name = 'add-knowledge';
 
@@ -11,19 +12,46 @@ const data = new SlashCommandBuilder()
     option.setName('input')
       .setDescription('The story to be shared')
       .setRequired(true)
-      .setMaxLength(2000));
+      .setMaxLength(2000))
+  .setDefaultMemberPermissions(PermissionFlagsBits.SendMessages);
 
 const execute = async (interaction: ChatInputCommandInteraction) => {
+  if (!isAdmin(interaction) || !isArchivist(interaction)) {
+    console.error('Invalid permissions');
+    await interaction.reply('Sorry, you do not have permissions to do that');
+    return;
+  }
+
   const chatInput = interaction.options.getString('input');
 
   if (!chatInput) {
-    console.error(`Invalid chat input`);
+    console.error('Invalid chat input');
     return;
   }
 
   await interaction.deferReply();
 
-  const response = await request(archivistApiEndpoint + '/api/embeddings', { method: 'POST', body: chatInput });
+  const userId = interaction.user.id;
+  const guildId = interaction.guildId;
+
+  if (!userId) {
+    console.error('Missing userId value');
+    return;
+  }
+
+  if (!guildId) {
+    console.error('Missing guildId value');
+    return;
+  }
+
+  const queryParams = new URLSearchParams({
+    userId: btoa(userId),
+    guildId: btoa(guildId)
+  });
+
+  const url = new URL('/api/embeddings?' + queryParams.toString(), archivistApiEndpoint);
+
+  const response = await request(url, { method: 'POST', body: chatInput });
 
   if (response.statusCode === 200) {
     await interaction.reply('Your story has been added');

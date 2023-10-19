@@ -1,6 +1,7 @@
 import { archivistApiEndpoint } from '../../config.json';
-import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, PermissionFlagsBits, SlashCommandBuilder } from "discord.js";
 import { request } from "undici";
+import { isAdmin, isOwner } from '../roles';
 
 const name = 'ask-question';
 
@@ -11,7 +12,8 @@ const data = new SlashCommandBuilder()
     option.setName('input')
       .setDescription('The question to ask')
       .setRequired(true)
-      .setMaxLength(2000));
+      .setMaxLength(2000))
+  .setDefaultMemberPermissions(PermissionFlagsBits.SendMessages);;
 
 const execute = async (interaction: ChatInputCommandInteraction) => {
   const chatInput = interaction.options.getString('input');
