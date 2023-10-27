@@ -1,3 +1,3 @@
 ﻿namespace Archivist.AI.Core;
 
-public record Embedding(string Text, IEnumerable<double> EmbeddingValue);
+public record Embedding(Guid Id, string Text, IEnumerable<double> EmbeddingValue);

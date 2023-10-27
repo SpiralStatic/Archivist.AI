@@ -47,7 +47,7 @@ public class EmbeddingsService : IEmbeddingsService
         if (embeddingResponse.Successful && embeddingResponse?.Data != null)
         {
             var embeddings = requestInput.Zip(embeddingResponse.Data)
-                .Select(x => new Embedding(x.First, x.Second.Embedding))
+                .Select(x => new Embedding(Guid.NewGuid(), x.First, x.Second.Embedding))
                 .ToList();
 
             await _library.UpdateLibrary(new Guid(), embeddings);
@@ -76,7 +76,7 @@ public class EmbeddingsService : IEmbeddingsService
         if (_embeddingsLibrary.Count == 0)
         {
             // TODO: Better sync
-            _embeddingsLibrary = await _library.ReadLibrary(new Guid());
+            _embeddingsLibrary = await _library.ReadLibrary(Guid.Empty);
         }
 
         var similarities = _embeddingsLibrary
@@ -92,5 +92,27 @@ public class EmbeddingsService : IEmbeddingsService
     private static double DotProduct(double[] vector1, double[] vector2)
     {
         return vector1.Zip(vector2).Sum(v => v.First * v.Second);
+    }
+
+    public async Task<Embedding> GetEmbedding(Guid id)
+    {
+        if (_embeddingsLibrary.Count == 0)
+        {
+            // TODO: Better sync
+            _embeddingsLibrary = await _library.ReadLibrary(Guid.Empty);
+        }
+
+        return _embeddingsLibrary.First(x => x.Id == id);
+    }
+
+    public async Task<List<Embedding>> GetEmbeddings()
+    {
+        if (_embeddingsLibrary.Count == 0)
+        {
+            // TODO: Better sync
+            _embeddingsLibrary = await _library.ReadLibrary(Guid.Empty);
+        }
+
+        return _embeddingsLibrary;
     }
 }

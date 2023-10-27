@@ -79,8 +79,8 @@ public class EmbeddingsServiceTests
     public void GetRelatedEmbeddings_GivenMatchingEmbeddings_ReturnsEmbeddings()
     {
         var givenEmbedding = new EmbeddingResponse { Embedding = new List<double> { 1, 2, 3 } };
-        var existingEmbedding = new Embedding("test2", new List<double> { 1, 2, 3 });
-        var existingEmbedding2 = new Embedding("test3", new List<double> { 1, 2, 3 });
+        var existingEmbedding = new Embedding(Guid.Empty, "test2", new List<double> { 1, 2, 3 });
+        var existingEmbedding2 = new Embedding(Guid.Empty, "test3", new List<double> { 1, 2, 3 });
 
         _openAIService.Embeddings.CreateEmbedding(default!)
             .ReturnsForAnyArgs(Task.FromResult(new EmbeddingCreateResponse { Data = new List<EmbeddingResponse> { givenEmbedding } }));

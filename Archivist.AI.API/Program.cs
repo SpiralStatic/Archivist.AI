@@ -1,8 +1,10 @@
 using Archivist.AI.Core;
 using Archivist.AI.Core.Repository.Library;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using OpenAI.Extensions;
 using System.Reflection;
+using System.Xml.Linq;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,11 +23,9 @@ builder.Services.AddScoped<ILibrary, SqlLiteLibrary>();
 
 builder.Services.AddMemoryCache();
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("ChatPermission", policy => policy.RequireClaim("OwnerId"));
-    options.AddPolicy("ManagementPermission", policy => policy.RequireClaim("OwnerId"));
-});
+builder.Services.AddAuthorization();
+
+builder.Services.AddAuthentication("Bearer");
 
 builder.Services.AddControllers();
 

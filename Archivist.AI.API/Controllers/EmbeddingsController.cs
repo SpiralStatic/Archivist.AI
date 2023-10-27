@@ -14,6 +14,18 @@ public class EmbeddingsController : ControllerBase
         _embeddingService = embeddingService;
     }
 
+    [HttpGet(Name = "GetEmbedding")]
+    public async Task Get(Guid id)
+    {
+        await _embeddingService.GetEmbedding(id);
+    }
+
+    [HttpGet(Name = "GetEmbeddings")]
+    public async Task GetAll()
+    {
+        await _embeddingService.GetEmbeddings();
+    }
+
     [HttpPost(Name = "PostEmbedding")]
     public async Task Post(string message)
     {

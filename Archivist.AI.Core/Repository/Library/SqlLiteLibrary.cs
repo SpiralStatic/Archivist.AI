@@ -14,7 +14,7 @@ public class SqlLiteLibrary : ILibrary
         var result = _libraryContext.Archives
                         .First(x => x.OwnerId == ownerId)
                         .Records
-                            .Select(x => new Embedding(x.Text, x.EmbeddingValue))
+                            .Select(x => new Embedding(x.Id, x.Text, x.EmbeddingValue))
                             .ToList();
 
         return Task.FromResult(result);
