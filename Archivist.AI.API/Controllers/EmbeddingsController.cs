@@ -1,4 +1,5 @@
 ﻿using Archivist.AI.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Archivist.AI.API.Controllers;
@@ -14,19 +15,22 @@ public class EmbeddingsController : ControllerBase
         _embeddingService = embeddingService;
     }
 
-    [HttpGet(Name = "GetEmbedding")]
+    [HttpGet("{id}", Name = "GetEmbedding")]
+    [Authorize(Policy = "ManagementPermission")]
     public async Task Get(Guid id)
     {
         await _embeddingService.GetEmbedding(id);
     }
 
     [HttpGet(Name = "GetEmbeddings")]
+    [Authorize(Policy = "ManagementPermission")]
     public async Task GetAll()
     {
         await _embeddingService.GetEmbeddings();
     }
 
     [HttpPost(Name = "PostEmbedding")]
+    [Authorize(Policy = "StorytellerPermission")]
     public async Task Post(string message)
     {
         await _embeddingService.UpdateEmbeddings(message);

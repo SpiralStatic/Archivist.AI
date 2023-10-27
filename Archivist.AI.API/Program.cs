@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using OpenAI.Extensions;
 using System.Reflection;
-using System.Xml.Linq;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,14 +22,42 @@ builder.Services.AddScoped<ILibrary, SqlLiteLibrary>();
 
 builder.Services.AddMemoryCache();
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(cfg =>
+{
+    cfg.AddPolicy("ChatPermission", policy => policy.RequireClaim("ownerid").RequireClaim("pchat", "true"));
+    cfg.AddPolicy("StorytellerPermission", policy => policy.RequireClaim("ownerid").RequireClaim("pstry", "true"));
+    cfg.AddPolicy("ManagementPermission", policy => policy.RequireClaim("ownerid").RequireClaim("pmngt", "true"));
+});
 
-builder.Services.AddAuthentication("Bearer");
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer();
 
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(x =>
+{
+    x.AddSecurityDefinition("Bearer",
+       new OpenApiSecurityScheme
+       {
+           Description = "JWT Authorization header using the Bearer scheme.",
+           Type = SecuritySchemeType.Http,
+           Scheme = "Bearer"
+       }
+    );
+
+    x.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme {
+                Reference = new OpenApiReference
+                {
+                    Id = "Bearer",
+                    Type = ReferenceType.SecurityScheme
+                }
+            }, new List<string>()
+        }
+    });
+});
 
 var app = builder.Build();
 

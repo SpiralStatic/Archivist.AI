@@ -11,9 +11,15 @@ public class SqlLiteLibrary : ILibrary
 
     public Task<List<Embedding>> ReadLibrary(Guid ownerId)
     {
-        var result = _libraryContext.Archives
-                        .First(x => x.OwnerId == ownerId)
-                        .Records
+        var archive = _libraryContext.Archives
+                        .FirstOrDefault(x => x.OwnerId == ownerId);
+
+        if (archive == null)
+        {
+            return Task.FromResult(new List<Embedding>());
+        }
+
+        var result = archive.Records
                             .Select(x => new Embedding(x.Id, x.Text, x.EmbeddingValue))
                             .ToList();
 

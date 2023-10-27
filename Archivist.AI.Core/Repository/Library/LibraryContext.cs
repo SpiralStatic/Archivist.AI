@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OpenAI.ObjectModels.ResponseModels;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json;
 
@@ -23,8 +22,10 @@ public class LibraryContext : DbContext
             .HaveConversion<DictionaryConverter<string>>();
 
         configurationBuilder
-            .Properties<List<double>>()
+            .Properties<ICollection<double>>()
             .HaveConversion<ListConverter<double>>();
+
+        base.ConfigureConventions(configurationBuilder);
     }
 }
 
@@ -41,7 +42,7 @@ public abstract record DbModel
 public record Owner : DbModel
 {
     public Guid Id { get; set; }
-    public Dictionary<string, string>? OwnershipProperties { get; set; }
+    public required Dictionary<string, string> OwnershipProperties { get; set; }
     public ICollection<Archive>? Archives { get; }
 }
 
@@ -74,7 +75,7 @@ public class DictionaryConverter<TValue> : ValueConverter<Dictionary<string, TVa
     }
 }
 
-public class ListConverter<TValue> : ValueConverter<List<TValue>, string>
+public class ListConverter<TValue> : ValueConverter<ICollection<TValue>, string>
 {
     public ListConverter() : base
         (
