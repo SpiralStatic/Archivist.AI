@@ -2,7 +2,7 @@
   <PropertyGroup>
 	<ShouldRunNpmInstall>false</ShouldRunNpmInstall>
     <!-- Command to run on project build -->
-    <BuildCommand>pnpm run build</BuildCommand>
+    <BuildCommand>pnpm i %26%26 pnpm run build</BuildCommand>
     <!-- Command to run on project clean -->
     <CleanCommand>pnpm run clean</CleanCommand>
   </PropertyGroup>
