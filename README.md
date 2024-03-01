@@ -34,6 +34,10 @@
 Note: If using the command line the following command can set a secret: `dotnet user-secrets set "KEY" "VALUE"`
 * Update your dotnet user-secrets with the following secrets set:
   * OpenAIServiceOptions:ApiKey // This is your OpenAI Api Key that is generated within your OpenAI account
+* Create your local JWT token
+  * dotnet user-jwts create
+* To access some endpoints you will need certain claims. You can customize tokens with claims by adding certain arguments during creation
+  * dotnet user-jwts create --claim "ownerid=00000" --claim "pchat=true" --claim "pstry=true" --claim "pmngt=true"
 * Perform the following command `dotnet run` in the Archivist.AI.API project folder
 
 ### Discord
